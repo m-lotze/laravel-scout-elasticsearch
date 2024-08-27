@@ -11,7 +11,7 @@ use Matchish\ScoutElasticSearch\Searchable\ImportSource;
 /**
  * @internal
  */
-final class SwitchToNewAndRemoveOldIndex
+final class SwitchToNewAndRemoveOldIndex implements StageInterface
 {
     /**
      * @var ImportSource
@@ -36,7 +36,7 @@ final class SwitchToNewAndRemoveOldIndex
     {
         $source = $this->source;
         $params = Get::anyIndex($source->searchableAs());
-        $response = $elasticsearch->indices()->getAlias($params->toArray());
+        $response = $elasticsearch->indices()->getAlias($params->toArray())->asArray();
 
         $params = new Update();
         foreach ($response as $indexName => $alias) {
